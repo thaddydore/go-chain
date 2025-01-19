@@ -19,7 +19,7 @@ Go-based library for interacting with blockchain networks. It simplifies smart c
 To install the library, use:
 
 ```bash
-go get [github.com/your-username/playgrounds-go](https://github.com/thaddydore/go-chain)
+go get https://github.com/thaddydore/go-chain
 ```
 
 ## Usage

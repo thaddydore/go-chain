@@ -2,6 +2,7 @@ package contracts
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	"github.com/ethereum/go-ethereum"
@@ -22,7 +23,7 @@ func NewContract(client *ethclient.Client, address string, abiJSON string) (*Con
     contractAddress := common.HexToAddress(address)
     parsedABI, err := abi.JSON(strings.NewReader(abiJSON))
     if err != nil {
-        return nil, err
+        return nil, fmt.Errorf("failed to parse ABI JSON: %w", err)
     }
     return &Contract{
         Address: contractAddress,
@@ -35,14 +36,21 @@ func NewContract(client *ethclient.Client, address string, abiJSON string) (*Con
 func (c *Contract) CallMethod(methodName string, result interface{}, params ...interface{}) error {
     callData, err := c.ABI.Pack(methodName, params...)
     if err != nil {
-        return err
+        return fmt.Errorf("failed to pack method %q with params %v: %w", methodName, params, err)
     }
     res, err := c.Client.CallContract(context.Background(), ethereum.CallMsg{
         To:   &c.Address,
         Data: callData,
     }, nil)
     if err != nil {
-        return err
+        return fmt.Errorf("failed to call contract method %q: %w", methodName, err)
     }
-    return c.ABI.UnpackIntoInterface(result, methodName, res)
+	// Unpack the raw response data into the provided result interface.
+     // Adds method-specific context to the error if unpacking fails.
+    if err := c.ABI.UnpackIntoInterface(result, methodName, res); err != nil {
+		return fmt.Errorf("failed to unpack result for method %q: %w", methodName, err)
+	}
+	
+	//this function completed successfully,no error occurred.
+	return nil
 }

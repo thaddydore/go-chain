@@ -1,6 +1,8 @@
 # Go-Chain
 
-Go-based library for interacting with blockchain networks. It simplifies smart contract interactions, transaction building, event listening, and account management, primarily for Ethereum and Ethereum-compatible networks.
+Go-Chain is a Go-based library that enables developers to interact seamlessly with blockchain networks. It provides simplified tooling for smart contract interaction, transaction creation, event listening, and account or wallet management. The primary focus is Ethereum and other EVM-compatible blockchains, but the architecture allows easy extension to additional networks.
+The library abstracts many of the low-level complexities typically encountered when working directly with blockchain RPC endpoints or raw Ethereum client libraries. Instead of manually encoding ABI data, building transactions from scratch, or decoding logs, Go-Chain offers clean, high-level interfaces that reduce boilerplate and potential errors.
+Go-Chain is lightweight by design, ensuring that developers can integrate it into existing projects or use it as the foundation for new blockchain applications. Whether the goal is building decentralised applications, backend automation for smart contracts, blockchain data monitoring tools, or internal systems that rely on Web3 infrastructure, this library provides the essential building blocks.
 
 ### Features
 
